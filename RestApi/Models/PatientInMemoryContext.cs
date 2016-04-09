@@ -72,20 +72,12 @@ namespace RestApi.Models
                         EpisodeId = 4,
                         PatientId = 2
                     }
-                //,
-                //new Episode
-                //    {
-                //        AdmissionDate = new DateTime(2015, 6, 2),
-                //        Diagnosis = "Athlete's foot",
-                //        DischargeDate = new DateTime(2015, 6, 13),
-                //        EpisodeId = 5,
-                //        PatientId = 2
-                //    }
+
             };
        }
 
-        public virtual IDbSet<Patient> Patients { get; private set; }
-        public virtual IDbSet<Episode> Episodes { get; private set; }
+        public IDbSet<Patient> Patients { get; private set; }
+        public IDbSet<Episode> Episodes { get; private set; }
     }
 
     public class TestPatientSet : TestDbSet<Patient>
