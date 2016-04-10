@@ -3,6 +3,7 @@ using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace RestApi.Models
 {
+    // Patient context for the database
     public class PatientContext : DbContext, IPatientContext
     {
 

@@ -6,6 +6,7 @@ using System.Linq;
 
 namespace RestApi.Models
 {
+    // Patient context for the in memory data
     public class PatientInMemoryContext : IPatientContext
     {
         public PatientInMemoryContext()
@@ -80,6 +81,7 @@ namespace RestApi.Models
         public IDbSet<Episode> Episodes { get; private set; }
     }
 
+    // Uses a mocked up version of DBSet
     public class TestPatientSet : TestDbSet<Patient>
     {
         public override Patient Find(params object[] keyValues)
@@ -88,6 +90,7 @@ namespace RestApi.Models
         }
     }
 
+    // Uses a mocked up version of DBSet
     public class TestEpisodeSet : TestDbSet<Episode>
     {
         public override Episode Find(params object[] keyValues)

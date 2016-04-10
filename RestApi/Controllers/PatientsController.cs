@@ -10,10 +10,6 @@ namespace RestApi.Controllers
     public class PatientsController : ApiController
     {
         private IPatientContext context;
-        public PatientsController()
-        {
-            this.context = new PatientContext();
-        }
 
         public PatientsController(IPatientContext patientContext)
         {

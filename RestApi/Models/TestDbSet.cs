@@ -7,6 +7,8 @@ using System.Web;
 
 namespace RestApi.Models
 {
+    // TestDbSet
+    // This allows a simple dataset to look like a DbSet
     public class TestDbSet<T> : IDbSet<T> where T : class
     {
         private ObservableCollection<T> dataSet;

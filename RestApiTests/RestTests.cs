@@ -4,12 +4,28 @@ using System.Web.Http;
 using System.Collections;
 using System.Net;
 using System.Linq;
+using RestApi.Models;
+using Microsoft.Practices.Unity;
+using Microsoft.Practices.ServiceLocation;
+using RestApi.Controllers;
 
 namespace RestApiTests
 {
     [TestClass]
     public class RestTests
     {
+        // Each test should be properly independent, so initialise the Controller every time.
+        private PatientsController Controller
+        {
+            get
+            {
+                var container = RestApi.UnityConfig.GetUnityContainer();
+                var context = container.Resolve<IPatientContext>("test_context");
+                var controller = new RestApi.Controllers.PatientsController(context);
+                return controller;
+            }
+        }
+
         [TestMethod]
         public void ReturnPatientWith1Episode()
         {
@@ -17,10 +33,7 @@ namespace RestApiTests
             int TESTPATIENTEPISODEQUANTITY = 1;
             int TESTPATIENTEPISODEID = 4;
 
-            var context = new RestApi.Models.PatientInMemoryContext();
-            var controller = new RestApi.Controllers.PatientsController(context);
-
-            var result = controller.Get(TESTPATIENTID);
+            var result = Controller.Get(TESTPATIENTID);
             // Check that retrieve correct Patient
             Assert.AreEqual(result.PatientId, TESTPATIENTID);
             // Check that Patient has correct number of episodes
@@ -36,16 +49,13 @@ namespace RestApiTests
             // ID of Patient with no episodes
             int TESTPATIENTID = 3;
 
-            var context = new RestApi.Models.PatientInMemoryContext();
-            var controller = new RestApi.Controllers.PatientsController(context);
-
             try
             {
-                var result = controller.Get(TESTPATIENTID);
+                var result = Controller.Get(TESTPATIENTID);
             }
             catch (HttpResponseException ex)
             {
-                // Should throw this
+                // Should have no episodes so should throw this
                 Assert.AreEqual(ex.Response.StatusCode, HttpStatusCode.NotFound, "404 received");
                 throw;
             }
